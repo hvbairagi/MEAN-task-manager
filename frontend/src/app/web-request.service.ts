@@ -20,6 +20,7 @@ export class WebRequestService {
   }
 
   patch(uri: string, payload: Object) {
+    console.log(uri, payload);
     return this.http.patch(`${this.ROOT_URL}/${uri}`, payload);
   }
 
@@ -30,6 +31,17 @@ export class WebRequestService {
   login(email: string, password: string) {
     return this.http.post(
       `${this.ROOT_URL}/users/login`,
+      {
+        email,
+        password,
+      },
+      { observe: 'response' }
+    );
+  }
+
+  signup(email: string, password: string) {
+    return this.http.post(
+      `${this.ROOT_URL}/users`,
       {
         email,
         password,
