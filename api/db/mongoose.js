@@ -4,10 +4,13 @@ const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
 mongoose
-  .connect("mongodb://localhost:27017/taskManager", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://admin-harsh:harsh@cluster0.nrzlu.mongodb.net/taskManager?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Connected to MongoDB successfully :)");
   })
