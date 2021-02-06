@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 
 const { mongoose } = require("./db/mongoose");
 
@@ -408,6 +409,13 @@ let deleteTasksFromList = (_listId) => {
     console.log("Tasks from " + _listId + " were deleted!");
   });
 };
+
+app.use(express.static(path.join(__dirname + "public")));
+
+//Running Front End index.html from backend.
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is listening on port 3000");
