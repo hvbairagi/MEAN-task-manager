@@ -81,7 +81,7 @@ let verifySession = (req, res, next) => {
         if (session.token === refreshToken) {
           // check if the session has expired
           if (User.hasRefreshTokenExpired(session.expiresAt) === false) {
-            // refresh token has not expuired
+            // refresh token has not expired
             isSessionValid = true;
           }
         }
@@ -131,9 +131,9 @@ app.get("/lists", authenticate, (req, res) => {
  */
 
 app.post("/lists", authenticate, (req, res) => {
-  // we want to create a new list and return the new list document backto the user which
+  // we want to create a new list and return the new list document back to the user which
   // includes the id
-  // the list information (feilds) will be passed in via the JSON request body
+  // the list information (fields) will be passed in via the JSON request body
   let title = req.body.title;
   let newList = new List({
     title,
@@ -198,7 +198,7 @@ app.get("/lists/:listId/tasks", authenticate, (req, res) => {
 app.get("/lists/:listId/tasks/:taskId", (req, res) => {
   Task.findOne({
     _id: req.params.taskId,
-    _listId: erq.params.listId,
+    _listId: req.params.listId,
   }).then((task) => {
     res.send(task);
   });
@@ -218,7 +218,7 @@ app.post("/lists/:listId/tasks", authenticate, (req, res) => {
   })
     .then((list) => {
       if (list) {
-        // list object with the specified consitions was found
+        // list object with the specified conditions was found
         // therefore the currently authenticated user can create new tasks
         return true;
       }
@@ -253,7 +253,7 @@ app.patch("/lists/:listId/tasks/:taskId", authenticate, (req, res) => {
   })
     .then((list) => {
       if (list) {
-        // list object with the specified consitions was found
+        // list object with the specified conditions was found
         // therefore the currently authenticated user can make updates to tasks within this list
         return true;
       }
@@ -288,7 +288,7 @@ app.delete("/lists/:listId/tasks/:taskId", authenticate, (req, res) => {
   })
     .then((list) => {
       if (list) {
-        // list object with the specified consitions was found
+        // list object with the specified conditions was found
         // therefore the currently authenticated user can make updates to tasks within this list
         console.log("found list: " + list);
         return true;
@@ -333,7 +333,7 @@ app.post("/users", (req, res) => {
       return newUser
         .generateAccessAuthToken()
         .then((accessToken) => {
-          // access auth token generated successfully, now we retur an object containing the auth tokens
+          // access auth token generated successfully, now we return an object containing the auth tokens
           return { accessToken, refreshToken };
         })
         .then((authTokens) => {
@@ -367,7 +367,7 @@ app.post("/users/login", (req, res) => {
           // now we generate an access auth token for the user
 
           return user.generateAccessAuthToken().then((accessToken) => {
-            // Access auth token generated successfully, now we return an object cntaining the auth tokens
+            // Access auth token generated successfully, now we return an object containing the auth tokens
             return { accessToken, refreshToken };
           });
         })
@@ -390,7 +390,7 @@ app.post("/users/login", (req, res) => {
  * Purpose: generates and returns an access token
  */
 app.get("/users/me/access-token", verifySession, (req, res) => {
-  // we know that the user/caller is authenticated and we have the user_id and user object availabele to us
+  // we know that the user/caller is authenticated and we have the user_id and user object available to us
   req.userObject
     .generateAccessAuthToken()
     .then((accessToken) => {

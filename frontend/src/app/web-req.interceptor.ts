@@ -3,7 +3,6 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
@@ -30,7 +29,7 @@ export class WebReqInterceptor implements HttpInterceptor {
         console.log(error);
 
         if (error.status === 401) {
-          // 401 error so we are unauthorised
+          // 401 error so we are unauthorized
 
           //refresh access token
           return this.refreshAccessToken().pipe(
